@@ -2,10 +2,11 @@ import { Button, Table, Input, Select } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
 import Layout from "../components/Layout";
+import { API_URL } from "@/constants";
 
 export async function getStaticProps() {
   try {
-    let data = await fetch("https://jsonplaceholder.typicode.com/users");
+    let data = await fetch(API_URL);
     let userData = await data.json();
     return {
       props: { userData },

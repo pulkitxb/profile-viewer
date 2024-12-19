@@ -3,13 +3,32 @@ import { DataListItem, DataListRoot } from "@/components/ui/data-list"
 import React from 'react';
 import Layout from "../../components/Layout"
 import { useRouter } from 'next/router';
+import { API_URL } from '@/constants';
 
-const page = () => {
-  const router = useRouter();
-  const { query } = router;
+export async function getServerSideProps(context) {
+  const { query, params } = context;
 
-  const { name, username, email, phone, website } = query.data ? JSON.parse(query.data) : null;
+  let userData = query.data ? JSON.parse(query.data) : null;
+  try {
+    if (!userData) {
+      let data = await fetch(`${API_URL}/${params.id}`);
+      userData = await data.json();
+    }
+    return {
+      props: { userData },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: { userData: {} },
+    }
+  }
 
+}
+
+const page = ({ userData }) => {
+
+  const { name, username, email, phone, website } = userData;
   return (
     <Layout showSearch={false}>
       <Card.Root>

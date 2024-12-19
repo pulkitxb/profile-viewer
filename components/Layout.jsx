@@ -1,4 +1,4 @@
-import { Flex, Box, Button, Input, createListCollection } from "@chakra-ui/react";
+import { Flex, Box, Button, Input, createListCollection, Text } from "@chakra-ui/react";
 import {
     SelectContent,
     SelectItem,
@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select";
 import Link from "next/link";
 import { useState, useCallback, useMemo } from "react";
+import { FaChevronLeft } from "react-icons/fa";
 
 export default function Layout({ children, showSearch = false, setFilteredData, userData, filteredData }) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -24,6 +25,7 @@ export default function Layout({ children, showSearch = false, setFilteredData, 
 
     const handleSearch = useCallback(
         (e) => {
+            console.log(e.target.value);
             const search = e.target.value;
             setSearchTerm(search);
             const filtered = userData.filter((user) =>
@@ -50,10 +52,10 @@ export default function Layout({ children, showSearch = false, setFilteredData, 
 
     return (
         <Box>
-            <Flex padding="16px" bg="teal.500" color="white" justify="space-between" align="center">
-                <Button variant="link" color="white" fontSize="22px" >
-                    <Link href="/">Home</Link>
-                </Button>
+            <Flex padding="8px 16px" bg="teal.500" color="white" justify="space-between" align="center" minHeight="75px">
+
+                {showSearch ? <Text paddingLeft="16px" fontWeight="semibold" color="white" fontSize="22px">Welcome</Text> : <Link href="/"><Button fontWeight="semibold" variant="link" color="white" fontSize="22px" ><FaChevronLeft />Home</Button></Link>}
+
                 {showSearch && (
                     <Flex align="center" gap={4}>
                         <Box padding="8px">
