@@ -50,13 +50,13 @@ export default function Layout({ children, showSearch = false, setFilteredData, 
 
     return (
         <Box>
-            <Flex p={4} bg="teal.500" color="white" justify="space-between" align="center">
+            <Flex padding="16px" bg="teal.500" color="white" justify="space-between" align="center">
                 <Button variant="link" color="white" fontSize="22px" >
                     <Link href="/">Home</Link>
                 </Button>
                 {showSearch && (
                     <Flex align="center" gap={4}>
-                        <Box p={2}>
+                        <Box padding="8px">
                             <Input
                                 placeholder="Search users"
                                 value={searchTerm}

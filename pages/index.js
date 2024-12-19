@@ -3,12 +3,20 @@ import Link from "next/link";
 import { useState } from "react";
 import Layout from "../components/Layout";
 
-export async function getServerSideProps() {
-  let data = await fetch("https://jsonplaceholder.typicode.com/users");
-  let userData = await data.json();
-  return {
-    props: { userData },
-  };
+export async function getStaticProps() {
+  try {
+    let data = await fetch("https://jsonplaceholder.typicode.com/users");
+    let userData = await data.json();
+    return {
+      props: { userData },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: { userData: [] },
+    }
+  }
+
 }
 
 export default function Home({ userData }) {
@@ -25,12 +33,12 @@ export default function Home({ userData }) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {filteredData.map(({ name, email, id }) => (
+          {filteredData.map(({ name, email, id, username, phone, website }) => (
             <Table.Row key={id}>
               <Table.Cell>{name}</Table.Cell>
               <Table.Cell>{email}</Table.Cell>
               <Table.Cell>
-                <Link href={`/users/${id}`}><Button bg="gray.600">View Details</Button></Link>
+                <Link href={{ pathname: `/users/${id}`, query: { data: JSON.stringify({ name, username, email, phone, website }) } }}><Button bg="gray.600">View Details</Button></Link>
               </Table.Cell>
             </Table.Row>
           ))}
