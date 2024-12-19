@@ -1,21 +1,21 @@
 import { Stack, Card } from '@chakra-ui/react';
 import { DataListItem, DataListRoot } from "@/components/ui/data-list"
-import React from 'react'
+import React from 'react';
+import Layout from "../../components/Layout"
 
 export async function getServerSideProps(context) {
-    const { id } = context.params;
-    let data = await fetch('https://jsonplaceholder.typicode.com/users/'+id);
-    let userData = await data.json();
-    console.log(userData);
-    return {
-      props: { userData },
-    };
-  }
+  const { id } = context.params;
+  let data = await fetch('https://jsonplaceholder.typicode.com/users/' + id);
+  let userData = await data.json();
+  return {
+    props: { userData },
+  };
+}
 
-const page = ({userData}) => {
-    const {name, username, email, phone, website} = userData;
+const page = ({ userData }) => {
+  const { name, username, email, phone, website } = userData;
   return (
-    <div>
+    <Layout showSearch={false}>
       <Card.Root>
         <Card.Header>
           <Card.Title>User Details</Card.Title>
@@ -32,7 +32,7 @@ const page = ({userData}) => {
           </Stack>
         </Card.Body>
       </Card.Root>
-    </div>
+    </Layout>
   )
 }
 
